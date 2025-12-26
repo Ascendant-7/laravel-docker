@@ -28,6 +28,7 @@ services:
       MYSQL_DATABASE: laravel
       MYSQL_USER: laravel
       MYSQL_PASSWORD: laravel
+      MYSQL_SSL: "0"
     networks:
       - laravel
 networks:
