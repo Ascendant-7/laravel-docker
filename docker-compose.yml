@@ -9,6 +9,11 @@ services:
       - ./php.ini:/usr/local/etc/php/php.ini
     ports:
       - "5173:5173"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./laravel/.env
     networks:
       - laravel
   webserver:
@@ -19,16 +24,13 @@ services:
     volumes:
       - ./laravel:/var/www
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      db:
-        condition: service_healthy
     networks:
       - laravel
   db:
     image: mysql:8.0
     container_name: mysql_db
-  #  ports:
-  #    - "3306:3306"
+    #  ports:
+    #    - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: laravel
@@ -36,7 +38,7 @@ services:
       MYSQL_PASSWORD: laravel
       MYSQL_SSL: "0"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1" ]
       interval: 5s
       timeout: 3s
       retries: 10
