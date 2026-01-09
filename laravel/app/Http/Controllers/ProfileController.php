@@ -11,6 +11,13 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function create()
+    {
+        abort_unless(auth()->user()->can('products.create'), 403);
+
+        return view('products.create');
+    }
+
     /**
      * Display the user's profile form.
      */
