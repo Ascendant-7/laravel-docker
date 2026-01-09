@@ -14,6 +14,8 @@ services:
         condition: service_healthy
     env_file:
       - ./laravel/.env
+    environment:
+      - HOME=/tmp
     networks:
       - laravel
   webserver:
